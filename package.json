@@ -1,0 +1,28 @@
+{
+  "name": "undermine",
+  "version": "1.0.0",
+  "description": "Reset module cache and its dependencies",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bredele/undermine.git"
+  },
+  "keywords": [
+    "invalidate",
+    "cache",
+    "module",
+    "dependencies"
+  ],
+  "author": "Olivier Wietrich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bredele/undermine/issues"
+  },
+  "homepage": "https://github.com/bredele/undermine#readme",
+  "devDependencies": {
+    "tape": "^5.6.1"
+  }
+}
