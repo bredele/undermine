@@ -1,6 +1,6 @@
 {
   "name": "undermine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reset module cache and its dependencies",
   "main": "index.js",
   "scripts": {
