@@ -39,12 +39,18 @@ const addChildDependencies = (modFilename) => {
  */
 
 module.exports = (filename) => {
-  const deps = dependencyTree[filename]
-  if (deps) {
-    for (const dep of deps) {
+  const dependants = dependencyTree[filename]
+  if (dependants) {
+    for (const dep of dependants) {
       delete require.cache[dep]
     }
   }
   delete require.cache[filename]
+  // reset dep tree
+  //dependencyTree[filename] = undefined
+  return {
+    filename,
+    dependants
+  }
 }
 
