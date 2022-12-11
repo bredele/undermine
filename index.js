@@ -24,10 +24,12 @@ const dependencyTree = {}
  */ 
 
 const addChildDependencies = (modFilename) => {
-  const { children } = require.cache[modFilename]
-  for (const { filename } of children) {
-    const dep = dependencyTree[filename] = dependencyTree[filename] || [] 
-    if (!dep.includes(modFilename)) dep.push(modFilename)
+  const mod = require.cache[modFilename]
+  if (mod) {
+    for (const { filename } of mod.children) {
+      const dep = dependencyTree[filename] = dependencyTree[filename] || [] 
+      if (!dep.includes(modFilename)) dep.push(modFilename)
+    }
   }
 }
 
