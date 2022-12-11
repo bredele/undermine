@@ -50,6 +50,31 @@ test('should return module stats', async (assert) => {
   require(f)
   const { filename, dependants } = invalidate(e)
   assert.equal(filename, e)
-  assert.deepEqual(dependants, [f])
-});
+  assert.deepEqual([...dependants], [f])
+})
+
+test('should reset module dependencies depth n + 2', async (assert) => {
+  assert.plan(2)
+  const g = join(__dirname, 'g.js')
+  await writeFile(g, `
+    module.exports = 'hello'
+  `)
+  const h = join(__dirname, 'h.js')
+  await writeFile(h, `
+    const g = require('./g')
+    module.exports = g
+  `)
+  const i = join(__dirname, 'i.js')
+  await writeFile(i, `
+    const h = require('./h')
+    module.exports = h
+  `)
+  assert.equal(require(i), 'hello')
+  await writeFile(g, `
+    module.exports = 'world'
+  `)
+  invalidate(g)
+  assert.equal(require(i), 'world')
+})
+
 

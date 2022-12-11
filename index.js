@@ -39,18 +39,32 @@ const addChildDependencies = (modFilename) => {
  */
 
 module.exports = (filename) => {
+  const dependants = new Set()
+  resetCache(filename, (file) => dependants.add(file))
+  return {
+    filename,
+    dependants: dependants
+  }
+}
+
+/**
+ * Reset module cache.
+ *
+ * @param {String} filename
+ * @param {Function} cb (function used to create a set of dependants modules)
+ * @private
+ */
+
+const resetCache = (filename, cb) => {
   const dependants = dependencyTree[filename]
   if (dependants) {
     for (const dep of dependants) {
-      delete require.cache[dep]
+      // TODO break down code to avoid range error max call stack
+      resetCache(dep, cb)
+      cb(dep)
     }
   }
   delete require.cache[filename]
-  // reset dep tree
-  //dependencyTree[filename] = undefined
-  return {
-    filename,
-    dependants
-  }
+  dependencyTree[filename] = undefined
 }
 
